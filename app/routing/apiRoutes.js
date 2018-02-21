@@ -50,7 +50,8 @@ app.post('/api/friends', function(req,res){
            // matching happens here
            var bestMatch = {
                name: friends[k].name,
-               photo: friends[k].photo
+               photo: friends[k].photo,
+               motto: friends[k].motto
            };
            // send back to the modal
            res.send(bestMatch);

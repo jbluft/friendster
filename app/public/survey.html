@@ -4,13 +4,19 @@
   <meta charset="UTF-8">
   <title>FriendFinder Survey Questions</title>
 
+
   <!-- Latest compiled and minified CSS & JS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-<!-- Font Awesome Glyphicons -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+  <!-- Font Awesome Glyphicons -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+  <!-- Chosen -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
+
 
 </head>
 <body>
@@ -148,7 +154,7 @@
     <br>
 
     <!-- Submit Button -->
-    <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit"><i class="fa fa-check-circle" aria-hidden="true"></i>
+    <button type="submit" class="btn btn-primary btn-lg" id="submit"><i class="fa fa-check-circle" aria-hidden="true"></i>
      Submit</button>
 
 
@@ -164,7 +170,7 @@
 
 
 
-<!-- Modal -->
+<!-- Modal Friends -->
 <div id="found-modal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -179,6 +185,9 @@
 
         <h2 id="match-buddy"></h2>
         <img id="match-img">
+        <hr>
+        Motto: <span id="show-motto"></span>
+
 
       </div>
       <div class="modal-footer" id="notFoundModal">
@@ -189,6 +198,34 @@
   </div>
 </div>
 <!-- end tip modal -->
+
+
+<!-- Modal Error -->
+<div id="error-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Did you forget something?</h4>
+      </div>
+      <div class="modal-body">
+
+
+        <h2>Please fill out all the fields before hitting "submit"</h2>
+
+      </div>
+      <div class="modal-footer" id="notFoundModal">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- end tip modal -->
+
+
 
 
 <!-- BELOW CODE IS CRITICAL. IT HANDLES HOW FORM DATA IS SENT TO OUR SERVER -->
@@ -216,7 +253,7 @@ function validateForm() {
         });
         return isValid;
       }
-      
+
 // If all required fields are filled
   if (validateForm()) {
 
@@ -246,6 +283,7 @@ function validateForm() {
         $.post(currentURL + '/api/friends', newFriend, function(data) {
           $("#match-buddy").text(data.name);
           $("#match-img").attr("src", data.photo).attr("width", "200px");
+          $("#show-motto").text("'" + data.motto + "'");
           $("#found-modal").modal("toggle");
           $('#name').val(""),
           $('#photo').val(""),
@@ -263,7 +301,8 @@ function validateForm() {
         
     });
   } else {
-    alert("Please fill out all fields before submitting!");
+    $("#error-modal").modal("toggle");
+
   }
 	});
 
