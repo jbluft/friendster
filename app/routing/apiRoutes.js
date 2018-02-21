@@ -24,16 +24,40 @@ module.exports = function(app) {
   // Then the server saves the data to the tableData array)
   // ---------------------------------------------------------------------------
 
-
-
 app.post('/api/friends', function(req,res){
   //grabs the new friend's scores to compare with friends in friendList array
-  console.log(req.body);
 
-  friends.push(req.body);
+   var newScores = req.body;
+   console.log(req.body);
 
+   var scoresArray = [];
+   // find each friends score in the array
+   friends.forEach(friendScore => {
 
-  //   }
-  // }
+    var scoreSum = 0;
+
+    for (var i = 0; i < 10; i++) {
+      scoreSum += Math.abs(newScores.scores[i] - friendScore.scores[i]);
+       }
+       scoresArray.push(scoreSum);
+   });
+
+   // find the closest match
+   var findMin = Math.min.apply(null, scoresArray);
+
+   for ( var j = 0; j < scoresArray.length; j++){
+       if (scoresArray[j] === findMin){
+           // matching happens here
+           var bestScore = {
+               name: friends[j].name,
+               photo: friends[j].photo
+           };
+           // send back to the modal
+           res.send(bestScore);
+       }
+   }
+
+   friends.push(newScores);
+   console.log(friends);
 });
-};
+}
