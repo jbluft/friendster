@@ -34,26 +34,26 @@ app.post('/api/friends', function(req,res){
    // find each friends score in the array
    friends.forEach(friendScore => {
 
-    var scoreSum = 0;
+    var scoreTotal = 0;
 
     for (var i = 0; i < 10; i++) {
-      scoreSum += Math.abs(newScores.scores[i] - friendScore.scores[i]);
+      scoreTotal += Math.abs(newScores.scores[i] - friendScore.scores[i]);
        }
-       scoresArray.push(scoreSum);
+       scoresArray.push(scoreTotal);
    });
 
    // find the closest match
-   var findMin = Math.min.apply(null, scoresArray);
+   var findLowest = Math.min.apply(null, scoresArray);
 
-   for ( var j = 0; j < scoresArray.length; j++){
-       if (scoresArray[j] === findMin){
+   for ( var k = 0; k < scoresArray.length; k++){
+       if (scoresArray[k] === findLowest){
            // matching happens here
-           var bestScore = {
-               name: friends[j].name,
-               photo: friends[j].photo
+           var bestMatch = {
+               name: friends[k].name,
+               photo: friends[k].photo
            };
            // send back to the modal
-           res.send(bestScore);
+           res.send(bestMatch);
        }
    }
 
