@@ -33,6 +33,9 @@
     <h4>Link to Photo Image (Required)</h4>
     <input type="text" id="photo" class="form-control" placeholder="http://coolpic.jpg" required>
 
+    <h4>What is your personal motto? (Required)</h4>
+    <input type="text" id="new-motto" class="form-control" placeholder="Personal Motto" required>
+
     <hr>
 
     <h3><strong>Question 1</strong></h3>
@@ -260,7 +263,7 @@ function validateForm() {
       // Here we grab the form elements
       var newFriend = {
                 name: $('#name').val().trim(),
-                profilePic: $('#photo').val().trim(),
+                photo: $('#photo').val().trim(),
                 scores: [
                     $('#q1').val(),
                     $('#q2').val(),
@@ -272,7 +275,8 @@ function validateForm() {
                     $('#q8').val(),
                     $('#q9').val(),
                     $('#q10').val(),
-                ]
+                ],
+                motto: $('#new-motto').val().trim()
             };
 
 
@@ -287,6 +291,7 @@ function validateForm() {
           $("#found-modal").modal("toggle");
           $('#name').val(""),
           $('#photo').val(""),
+          $('#new-motto').val(""),
           $('#q1').val(""),
           $('#q2').val(""),
           $('#q3').val(""),
